@@ -1,21 +1,26 @@
 package com.spring.security.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.spring.security.entity.User;
+import com.spring.security.service.CustomUserService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("user")
 public class UserController {
+
+    private final CustomUserService service;
+
+    public UserController( CustomUserService service){
+        this.service = service;
+    }
 
     @GetMapping("/hello")
     public String getHello(){
         return "Hello";
     }
 
-    @PostMapping("/hello")
-    public String postHello(){
-        return "Post Hello";
+    @PostMapping()
+    public void postHello(@RequestBody User user){
+        service.createUser(user);
     }
 }
